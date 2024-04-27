@@ -10,7 +10,7 @@ function initAPI() {
 
   app.use(async (req, res) => {
     try {
-      const url = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+      const url = `${req.protocol}://${req.get("host")}${req.url}`;
       console.log({ url });
       const data = urlStrToAuthDataMap(url);
 
