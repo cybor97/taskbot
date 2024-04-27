@@ -29,6 +29,9 @@ export class User {
   @Column("boolean")
   isActive: boolean;
 
+  @Column("varchar", { nullable: true })
+  referralCode: string;
+
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 

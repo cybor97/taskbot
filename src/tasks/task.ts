@@ -1,3 +1,5 @@
-export abstract class Task {
-  abstract verify(): Promise<boolean>;
+import { User } from "../orm/entities/user";
+
+export abstract class TaskVerifier {
+  abstract verify(user: User, ...args: unknown[]): Promise<boolean>;
 }

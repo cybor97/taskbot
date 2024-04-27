@@ -1,7 +1,8 @@
 import { User } from "../../orm/entities/user";
+import { TaskVerifier } from "../task";
 import { getTonapiClient } from "../tonapi";
 
-export class TonAmountTask {
+export class TonAmountTask extends TaskVerifier {
   async verify(user: User, data: { amount: number | null }): Promise<boolean> {
     if (user.tonWalletId === null) {
       return false;

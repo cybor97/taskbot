@@ -1,7 +1,8 @@
 import { User } from "../../orm/entities/user";
+import { TaskVerifier } from "../task";
 import { getTonapiClient } from "../tonapi";
 
-export class TokenAmountTask {
+export class TokenAmountTask extends TaskVerifier {
   async verify(
     user: User,
     data: { currencies: string[]; amount: number | null },
