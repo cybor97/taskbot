@@ -13,6 +13,9 @@ export const config = {
     username: process.env.DB_USERNAME ?? "postgres",
     password: process.env.DB_PASSWORD ?? "",
   },
+  tonapi: {
+    key: process.env.TONAPI_KEY ?? null,
+  },
   loki: {
     host: process.env.LOKI_HOST,
     token: process.env.LOKI_TOKEN,

@@ -19,6 +19,9 @@ export class User {
   @Index("user_tgid_idx")
   tgId: string | null;
 
+  @Column("varchar", { nullable: true })
+  tonWalletId: string | null;
+
   @Column("varchar")
   @Index("username_idx", { unique: true })
   username: string;
