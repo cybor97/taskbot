@@ -1,7 +1,9 @@
 import { initBot } from "./entryPoints/bot";
 import { initAPI } from "./entryPoints/api";
+import AppDataSource from "./orm";
 
-function main() {
+async function main() {
+  await AppDataSource.initialize();
   initBot();
   initAPI();
 }

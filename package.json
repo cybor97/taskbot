@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "nodemon ./src/index.ts",
     "build": "tsc -p tsconfig.json",
     "db": "WITH_MIGRATION_DATASOURCE=true typeorm-ts-node-commonjs",
     "db:migration:run": "yarn db migration:run -d src/orm/index.ts",
