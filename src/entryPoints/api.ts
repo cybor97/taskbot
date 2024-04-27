@@ -20,7 +20,7 @@ export function initAPI(): void {
 
       const referralCode = req.query.referral_code?.toString() ?? null;
 
-      const user = await UserDao.getDao().initUser(tgUser.id, referralCode);
+      const user = await UserDao.getDao().initUser(tgUser, referralCode);
 
       req.app.locals.user = user;
       res.status(200).send({ user });

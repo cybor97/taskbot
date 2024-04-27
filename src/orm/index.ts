@@ -8,6 +8,7 @@ import { UserTask } from "./entities/userTask";
 import logger from "../utils/logger";
 import { Init1714240541421 } from "./migrations/1714240541421-init";
 import { AddTonWalletAndReferralCode1714254417296 } from "./migrations/1714254417296-migration";
+import { UsernameNullable1714255919453 } from "./migrations/1714255919453-UsernameNullable";
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -17,7 +18,11 @@ const AppDataSource = new DataSource({
   username: config.db.username,
   password: config.db.password,
   entities: [User, Config, Task, TaskGroup, UserTask],
-  migrations: [Init1714240541421, AddTonWalletAndReferralCode1714254417296],
+  migrations: [
+    Init1714240541421,
+    AddTonWalletAndReferralCode1714254417296,
+    UsernameNullable1714255919453,
+  ],
 });
 
 if (process.env.WITH_MIGRATION_DATASOURCE === "true") {

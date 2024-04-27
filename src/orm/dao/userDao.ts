@@ -4,6 +4,7 @@ import { User } from "../entities/user";
 import AppDataSource from "..";
 import { Task } from "../entities/task";
 import { UserTask } from "../entities/userTask";
+import { TelegramUserData } from "@telegram-auth/server";
 
 export class UserDao {
   private userRepository: Repository<User>;
@@ -31,11 +32,11 @@ export class UserDao {
   }
 
   public async initUser(
-    telegramId: string | number,
+    telegramUser: TelegramUserData,
     referralCode: string | null,
   ): Promise<User> {
     const [user, created] = await this.getOrCreateUser(
-      telegramId,
+      telegramUser,
       referralCode,
     );
     if (created) {
@@ -45,10 +46,10 @@ export class UserDao {
   }
 
   public async getOrCreateUser(
-    telegramId: string | number,
+    telegramUser: TelegramUserData,
     referralCode: string | null,
   ): Promise<[User, boolean]> {
-    const tgId = telegramId.toString();
+    const tgId = telegramUser.id.toString();
     const user = await this.userRepository.findOne({
       where: { tgId },
     });
@@ -62,6 +63,8 @@ export class UserDao {
     newUserData.referralCode = `${humanId({
       separator: "",
     })}${Date.now().toString(32)}`;
+    newUserData.username = telegramUser.username ?? null;
+
     if (referralCode !== null) {
       const referredBy = await this.userRepository.findOne({
         where: { referralCode },

@@ -22,9 +22,9 @@ export class User {
   @Column("varchar", { nullable: true })
   tonWalletId: string | null;
 
-  @Column("varchar")
+  @Column("varchar", { nullable: true })
   @Index("username_idx", { unique: true })
-  username: string;
+  username: string | null;
 
   @Column("boolean")
   isActive: boolean;
