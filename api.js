@@ -10,8 +10,10 @@ function initAPI() {
 
   app.use(async (req, res) => {
     try {
-      const data = urlStrToAuthDataMap(req.url);
-      // validate the data by passing the map to the validator
+      const url = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+      console.log({ url });
+      const data = urlStrToAuthDataMap(url);
+
       const user = await validator.validate(data);
 
       console.log(user);
