@@ -1,8 +1,17 @@
-const { Telegraf } = require("telegraf");
-const { message } = require("telegraf/filters");
+import { Telegraf } from "telegraf";
+import { message } from "telegraf/filters";
 
-function initBot() {
-  const bot = new Telegraf(process.env.BOT_TOKEN);
+export function initBot(): void {
+  const botToken = process.env.BOT_TOKEN ?? null;
+  if (botToken === null) {
+    throw new Error("No bot token provided");
+  }
+  const url = process.env.WEB_APP_URL ?? null;
+  if (url === null) {
+    throw new Error("No web app url provided");
+  }
+
+  const bot = new Telegraf(botToken);
   bot.start((ctx) =>
     ctx.reply("Welcome!", {
       reply_markup: {
@@ -11,7 +20,7 @@ function initBot() {
             {
               text: "Open",
               web_app: {
-                url: process.env.WEB_APP_URL,
+                url,
               },
             },
           ],
@@ -25,7 +34,3 @@ function initBot() {
   process.once("SIGINT", () => bot.stop("SIGINT"));
   process.once("SIGTERM", () => bot.stop("SIGTERM"));
 }
-
-module.exports = {
-  initBot,
-};
