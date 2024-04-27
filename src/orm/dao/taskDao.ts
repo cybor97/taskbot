@@ -30,6 +30,7 @@ export class TaskDao {
           id: true,
           name: true,
           description: true,
+          url: true,
           userTasks: {
             id: true,
             completed: true,
