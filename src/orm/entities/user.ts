@@ -38,7 +38,7 @@ export class User {
   @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.referrals, { eager: true })
+  @ManyToOne(() => User, (user) => user.referrals, { eager: false })
   referredBy: User;
 
   @OneToMany(() => User, (user) => user.referredBy, { eager: false })
