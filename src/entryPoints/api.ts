@@ -3,9 +3,7 @@ import express from "express";
 import { AuthDataValidator } from "@telegram-auth/server";
 import { UserDao } from "../orm/dao/userDao";
 import logger from "../utils/logger";
-import { TaskDao } from "../orm/dao/taskDao";
-import taskVerifierMap from "../tasks";
-import { TaskVerifier } from "../tasks/task";
+import miniapp from "../routers/miniapp";
 
 export function initAPI(): void {
   const validator = new AuthDataValidator({ botToken: process.env.BOT_TOKEN });
@@ -30,44 +28,7 @@ export function initAPI(): void {
     }
   });
 
-  app.get("/me", (req, res) => {
-    res.status(200).send(req.app.locals.user);
-  });
-  app.get("/tasks", async (req, res) => {
-    const tasksGroupsData = await TaskDao.getDao().getTasksGroupped(
-      req.app.locals.user,
-    );
-    res.status(200).send(tasksGroupsData);
-  });
-
-  app.post("/tasks/:taskId/verify", async (req, res) => {
-    const taskId = parseInt(req.params.taskId);
-    const userTask = await TaskDao.getDao().getTaskById(taskId);
-    if (userTask === null) {
-      res.status(404).send({ error: "Task not found" });
-      return;
-    }
-
-    const verifier: TaskVerifier =
-      //@ts-expect-error undefined is not a problem here
-      taskVerifierMap[userTask.task.type] ?? taskVerifierMap.default;
-    const verified = await verifier.verify(userTask.user, userTask.task.data);
-    if (verified) {
-      res.status(200).send({ verified });
-    } else {
-      res.status(400).send({ error: "Verification failed" });
-    }
-  });
-  app.get("/xp", async (req, res) => {
-    const totalXp = await TaskDao.getDao().getTotalXP(req.app.locals.user.id);
-    res.status(200).send({ totalXp });
-  });
-  app.get("/referrals/count", async (req, res) => {
-    const referralsCount = await UserDao.getDao().getReferralsCount(
-      req.app.locals.user.id,
-    );
-    res.status(200).send({ referralsCount });
-  });
+  app.use("/api", miniapp);
 
   app.use((_req, res, _next) => {
     res.status(404).send({ error: "Not found" });
