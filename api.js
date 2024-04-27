@@ -10,9 +10,9 @@ function initAPI() {
 
   app.use(async (req, res) => {
     try {
-      console.log(Object.entries(req.query));
+      console.log(new Map(Object.entries(req.query)));
 
-      const user = await validator.validate(Object.entries(req.query));
+      const user = await validator.validate(new Map(Object.entries(req.query)));
 
       console.log(user);
 
