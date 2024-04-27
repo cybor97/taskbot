@@ -1,3 +1,4 @@
+const { inspect } = require("util");
 const express = require("express");
 const { AuthDataValidator } = require("@telegram-auth/server");
 const { urlStrToAuthDataMap } = require("@telegram-auth/server/utils");
@@ -18,6 +19,7 @@ function initAPI() {
       res.status(200).send({ user });
     } catch (error) {
       console.error(error);
+      res.status(400).send({ error: inspect(error) });
     }
   });
   app.listen(process.env.PORT ?? 5175, "localhost", () => {
