@@ -23,7 +23,6 @@ export function initAPI(): void {
       const user = await UserDao.getDao().initUser(tgUser, referralCode);
 
       req.app.locals.user = user;
-      res.status(200).send({ user });
       next();
     } catch (error) {
       logger.error(`Error: ${inspect(error)}`);
@@ -68,6 +67,19 @@ export function initAPI(): void {
       req.app.locals.user.id,
     );
     res.status(200).send({ referralsCount });
+  });
+
+  app.use((_req, res, _next) => {
+    res.status(404).send({ error: "Not found" });
+  });
+  app.use(function (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    _next: () => void,
+  ) {
+    logger.error(`Error: ${inspect(err)}`);
+    res.status(500).send({ error: inspect(err) });
   });
 
   const port = process.env.PORT ?? null;
