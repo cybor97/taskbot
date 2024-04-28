@@ -2,6 +2,7 @@ import express from "express";
 import { TaskDao } from "../orm/dao/taskDao";
 import { UserDao } from "../orm/dao/userDao";
 import { TaskVerifier } from "../tasks/task";
+import { ConfigDao } from "../orm/dao/configDao";
 
 const router = express.Router();
 
@@ -42,6 +43,14 @@ router.get("/referrals/count", async (req, res) => {
     req.app.locals.user.id,
   );
   res.status(200).send({ referralsCount });
+});
+router.get("/dropat", async (req, res) => {
+  const dropAt = await ConfigDao.getDao().getConfigValue("drop_at");
+  res.status(200).send({ dropAt });
+});
+router.get("/referrals_limit", async (req, res) => {
+  const dropAt = await ConfigDao.getDao().getConfigValue("referrals_limit");
+  res.status(200).send({ dropAt });
 });
 
 export default router;

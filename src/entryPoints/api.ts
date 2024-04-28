@@ -1,3 +1,5 @@
+import "express-async-errors";
+
 import { inspect } from "util";
 import express from "express";
 import { AuthDataValidator } from "@telegram-auth/server";
@@ -23,7 +25,7 @@ export function initAPI(): void {
       if (walletId !== null) {
         await UserDao.getDao().setWalletId(user, walletId);
       }
-      
+
       req.app.locals.user = user;
       next();
     } catch (error) {
