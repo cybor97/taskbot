@@ -49,8 +49,8 @@ router.get("/dropat", async (req, res) => {
   res.status(200).send({ dropAt });
 });
 router.get("/referrals_limit", async (req, res) => {
-  const dropAt = await ConfigDao.getDao().getConfigValue("referrals_limit");
-  res.status(200).send({ dropAt });
+  const referralsLimit = await ConfigDao.getDao().getConfigValue("referrals_limit");
+  res.status(200).send({ referralsLimit });
 });
 
 export default router;
