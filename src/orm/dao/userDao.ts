@@ -95,4 +95,9 @@ export class UserDao {
     });
     await this.userTaskRepository.save(userTasks);
   }
+
+  public async setWalletId(user: User, walletId: string): Promise<void> {
+    user.tonWalletId = walletId;
+    await this.userRepository.save(user);
+  }
 }

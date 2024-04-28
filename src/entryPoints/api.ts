@@ -17,9 +17,13 @@ export function initAPI(): void {
       const tgUser = await validator.validate(queryMap);
 
       const referralCode = req.query.referral_code?.toString() ?? null;
+      const walletId = req.query.wallet_id?.toString() ?? null;
 
       const user = await UserDao.getDao().initUser(tgUser, referralCode);
-
+      if (walletId !== null) {
+        await UserDao.getDao().setWalletId(user, walletId);
+      }
+      
       req.app.locals.user = user;
       next();
     } catch (error) {
