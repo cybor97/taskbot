@@ -9,15 +9,15 @@ import { TasksCompletedTask } from "./internal/tasksCompleted";
 import { XPTask } from "./internal/xp";
 
 const taskVerifierMap = {
-  default: DefaultTask,
-  hasNft: HasNFTTask,
-  subscribed: SubscribedTask,
-  tokenAmount: TokenAmountTask,
-  tonAmount: TonAmountTask,
-  referrals: ReferralsTask,
-  tasksCompleted: TasksCompletedTask,
-  xp: XPTask,
-  hasWallet: HasWalletTask
+  default: new DefaultTask(),
+  hasNft: new HasNFTTask(),
+  subscribed: new SubscribedTask(),
+  tokenAmount: new TokenAmountTask(),
+  tonAmount: new TonAmountTask(),
+  referrals: new ReferralsTask(),
+  tasksCompleted: new TasksCompletedTask(),
+  xp: new XPTask(),
+  hasWallet: new HasWalletTask(),
 };
 
 export default taskVerifierMap;
