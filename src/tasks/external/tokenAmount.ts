@@ -26,7 +26,7 @@ export class TokenAmountTask extends TaskVerifier {
       return false;
     }
 
-    balancesCurrencies.every((balance) => {
+    return balancesCurrencies.every((balance) => {
       if (data.amount === null) {
         return BigInt(balance.balance) > BigInt(0);
       }
