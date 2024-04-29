@@ -19,13 +19,18 @@ export class TokenAmountTask extends TaskVerifier {
         currencies,
       },
     );
-    return balances.balances
-      .filter((balance) => currencies.includes(balance.jetton.symbol))
-      .every((balance) => {
-        if (data.amount === null) {
-          return BigInt(balance.balance) > BigInt(0);
-        }
-        return BigInt(balance.balance) >= BigInt(data.amount ?? 0);
-      });
+    const balancesCurrencies = balances.balances.filter((balance) =>
+      currencies.includes(balance.jetton.symbol),
+    );
+    if (balancesCurrencies.length === 0) {
+      return false;
+    }
+
+    balancesCurrencies.every((balance) => {
+      if (data.amount === null) {
+        return BigInt(balance.balance) > BigInt(0);
+      }
+      return BigInt(balance.balance) >= BigInt(data.amount ?? 0);
+    });
   }
 }
