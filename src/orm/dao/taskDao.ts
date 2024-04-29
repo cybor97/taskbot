@@ -76,4 +76,9 @@ export class TaskDao {
       })) ?? 0
     );
   }
+
+  public async complete(userTask: UserTask): Promise<void> {
+    userTask.completed = true;
+    await this.userTaskRepository.save(userTask);
+  }
 }

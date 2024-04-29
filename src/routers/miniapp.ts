@@ -18,7 +18,9 @@ router.get("/tasks", async (req, res) => {
 
 router.post("/tasks/:taskId/verify", async (req, res) => {
   const taskId = parseInt(req.params.taskId);
-  const userTask = await TaskDao.getDao().getTaskById(taskId);
+  
+  const taskDao = TaskDao.getDao();
+  const userTask = await taskDao.getTaskById(taskId);
   if (userTask === null) {
     res.status(404).send({ error: "Task not found" });
     return;
@@ -28,6 +30,9 @@ router.post("/tasks/:taskId/verify", async (req, res) => {
     //@ts-expect-error undefined is not a problem here
     taskVerifierMap[userTask.task.type] ?? taskVerifierMap.default;
   const verified = await verifier.verify(userTask.user, userTask.task.data);
+
+  await taskDao.complete(userTask);
+
   if (verified) {
     res.status(200).send({ verified });
   } else {
