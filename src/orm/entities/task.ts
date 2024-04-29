@@ -30,7 +30,7 @@ export class Task {
   @Column("jsonb")
   data: unknown;
 
-  @Column("varchar")
+  @Column("varchar", { nullable: true })
   url: string;
 
   @Column("boolean")
