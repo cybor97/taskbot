@@ -18,8 +18,8 @@ export function initAPI(): void {
       // @ts-expect-error undefined is not a problem here
       const tgUser = await validator.validate(queryMap);
 
-      const referralCode = req.query.referral_code?.toString() ?? null;
-      const walletId = req.query.wallet_id?.toString() ?? null;
+      const referralCode = req.body?.referral_code?.toString() ?? null;
+      const walletId = req.body?.wallet_id?.toString() ?? null;
 
       const user = await UserDao.getDao().initUser(tgUser, referralCode);
       if (walletId !== null) {
