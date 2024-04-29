@@ -17,7 +17,7 @@ export class SubscribedTask extends TaskVerifier {
         chatId,
         parseInt(user.tgId),
       )) ?? null) as ChatMember | null;
-      return chatMember !== null;
+      return chatMember !== null && chatMember.status !== "left";
     } catch (e) {
       logger.error(`[SubscribedTask][verify] ${e}`);
       return false;
