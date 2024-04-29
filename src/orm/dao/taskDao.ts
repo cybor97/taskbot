@@ -73,6 +73,7 @@ export class TaskDao {
     return (
       (await this.userTaskRepository.sum("reward", {
         user: { id: userId },
+        completed: true,
       })) ?? 0
     );
   }
