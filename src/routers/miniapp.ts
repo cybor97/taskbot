@@ -19,7 +19,7 @@ router.get("/tasks", async (req, res) => {
 
 router.post("/tasks/:taskId/verify", async (req, res) => {
   const taskId = parseInt(req.params.taskId);
-  
+
   const taskDao = TaskDao.getDao();
   const userTask = await taskDao.getTaskById(taskId);
   if (userTask === null) {
@@ -32,9 +32,8 @@ router.post("/tasks/:taskId/verify", async (req, res) => {
     taskVerifierMap[userTask.task.type] ?? taskVerifierMap.default;
   const verified = await verifier.verify(userTask.user, userTask.task.data);
 
-  await taskDao.complete(userTask);
-
   if (verified) {
+    await taskDao.complete(userTask);
     res.status(200).send({ verified });
   } else {
     res.status(400).send({ error: "Verification failed" });
@@ -55,7 +54,9 @@ router.get("/dropat", async (req, res) => {
   res.status(200).send({ dropAt });
 });
 router.get("/referrals_limit", async (req, res) => {
-  const referralsLimit = await ConfigDao.getDao().getConfigValue("referrals_limit");
+  const referralsLimit = await ConfigDao.getDao().getConfigValue(
+    "referrals_limit",
+  );
   res.status(200).send({ referralsLimit });
 });
 
