@@ -3,6 +3,7 @@ import { TaskDao } from "../orm/dao/taskDao";
 import { UserDao } from "../orm/dao/userDao";
 import { TaskVerifier } from "../tasks/task";
 import { ConfigDao } from "../orm/dao/configDao";
+import taskVerifierMap from "../tasks";
 
 const router = express.Router();
 
